@@ -5,8 +5,11 @@
  */
 package login;
 
+import data.Reader;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.HashSet;
 
 /**
  *
@@ -16,6 +19,8 @@ public class Login extends javax.swing.JFrame {
 
     private String username;
     private String password;
+    private int pos_X;
+    private int pos_Y;
     /**
      * Creates new form Login
      */
@@ -23,6 +28,11 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    }
+    
+    public Login(int width, int height) {
+        initComponents();
+        this.setLocation(width, height);
     }
     
     /**public void screen() {
@@ -49,9 +59,10 @@ public class Login extends javax.swing.JFrame {
         signInButton = new javax.swing.JButton();
         UserNameText = new javax.swing.JTextField();
         PasswordText = new javax.swing.JTextField();
+        signUpButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(192, 192, 192));
         setBounds(new java.awt.Rectangle(0, 0, 500, 500));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -59,7 +70,6 @@ public class Login extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(600, 500));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 500));
-        setType(java.awt.Window.Type.UTILITY);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("Casino"), this, org.jdesktop.beansbinding.BeanProperty.create("title"));
         bindingGroup.addBinding(binding);
@@ -70,6 +80,7 @@ public class Login extends javax.swing.JFrame {
         userNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userNameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         userNameTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        userNameTextField.setNextFocusableComponent(passwordField);
         userNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userNameTextFieldActionPerformed(evt);
@@ -77,6 +88,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         passwordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        passwordField.setNextFocusableComponent(signInButton);
 
         signInButton.setBackground(new java.awt.Color(45, 45, 45));
         signInButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -96,7 +108,7 @@ public class Login extends javax.swing.JFrame {
         UserNameText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         UserNameText.setForeground(new java.awt.Color(255, 255, 255));
         UserNameText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        UserNameText.setText("User name");
+        UserNameText.setText("Username");
         UserNameText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         PasswordText.setEditable(false);
@@ -106,6 +118,20 @@ public class Login extends javax.swing.JFrame {
         PasswordText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         PasswordText.setText("Password");
         PasswordText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        signUpButton.setBackground(new java.awt.Color(30, 30, 30));
+        signUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login/Sign_up.jpg"))); // NOI18N
+        signUpButton.setBorderPainted(false);
+        signUpButton.setOpaque(false);
+        signUpButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/login/Sign_up_over.jpg"))); // NOI18N
+        signUpButton.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/login/Sign_up_over.jpg"))); // NOI18N
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUpButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login/ozadje2-7.jpg"))); // NOI18N
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
@@ -124,13 +150,18 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(PasswordText, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)))
                     .addGroup(loginPanelLayout.createSequentialGroup()
                         .addGap(176, 176, 176)
-                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGap(179, 179, 179)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginPanelLayout.createSequentialGroup()
                         .addComponent(UserNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,14 +174,16 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(loginPanel, 1600, 1600, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,17 +201,51 @@ public class Login extends javax.swing.JFrame {
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         // TODO add your handling code here:
+        boolean found = false;
+        HashSet<String[]> players = new HashSet();
         this.username = userNameTextField.getText();
         this.password = passwordField.getText();
-        System.out.println("username: " + this.username);
-        System.out.println("password: " + this.password);
-        System.exit(0);
+        Reader reader = new Reader("players");
+        if (reader.read()) {
+            players = reader.getData();
+        }
+        else System.err.println("zrihtj datoteko");
+        
+        for (String[] player : players) {
+            if (player[0].equals(this.username)) {
+                found = true;
+                if (player[1].equals(this.password)) {
+                    PasswordText.setForeground(new java.awt.Color(0, 255, 0));
+                    UserNameText.setForeground(new java.awt.Color(255, 255, 255));
+                    System.out.println("Bravo");    // tukej dej kodo da ga sprejmes not
+                }
+                else {
+                    PasswordText.setForeground(new java.awt.Color(255, 0, 0));
+                }
+            }
+        }
+        
+        if (!found) {
+            PasswordText.setForeground(new java.awt.Color(255, 0, 0));
+            UserNameText.setForeground(Color.red);
+        }
+        if (found) {
+            found = false;
+            UserNameText.setForeground(Color.white);
+        }
     }//GEN-LAST:event_signInButtonActionPerformed
+
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        SignUp signUp = new SignUp(this.getX(), this.getY());
+        signUp.show();
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void view() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -213,9 +280,11 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField PasswordText;
     private javax.swing.JTextField UserNameText;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton signInButton;
+    private javax.swing.JButton signUpButton;
     private javax.swing.JTextField userNameTextField;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

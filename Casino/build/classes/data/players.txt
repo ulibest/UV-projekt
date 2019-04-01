@@ -1,0 +1,6 @@
+nov,hej
+urban,hej
+player,new
+era,nema
+ima,kaj
+k,k
